@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, e
 import pymysql.cursors
 import os
 from urllib.parse import urlparse
+import urllib.parse
 
 app = Flask(__name__)
 print("hello human")
@@ -16,9 +17,9 @@ db_port = 3306
 print("before cleardb dtabase url parsing")
 if ('CLEARDB_DATABASE_URL' in os.environ):
     url = os.environ.get('CLEARDB_DATABASE_URL')
-    urlparse.uses_netloc.append('mysql')
+    urllib.parse.uses_netloc.append('mysql')
 
-    url = urlparse.urlparse(url)
+    url = urlparse(url)
     db_name = url.path[1:]
     host = url.hostname
     user = url.username
