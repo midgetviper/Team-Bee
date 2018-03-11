@@ -15,57 +15,157 @@
             <h1 class="title">
                 Patient Registration
             </h1>
-            <!--
-            <p class="subtitle">
-                Register a patient account on the platform
-            </p>
-            -->
 
             <form method="POST" action="/signup.html">
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input name = "name" id = "name" class="input" type="text" placeholder="Text input" value="Alex Schudel"
+                        <input name = "name" id = "name" class="input" type="text" placeholder="Name"
                         required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
                     </div>
-                    <!--<p class="help is-success">This username is available</p>-->
                 </div>
 
                 <div class="field">
-                    <label class="label">PhoneNumber</label>
+                    <label class="label">Email address</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input name = "phone" id = "phone" class="input" type="email" placeholder="Phone Number" value="+447592757559"
+                        <input name = "email" id = "email" class="input" type="email" placeholder="Email address"
                         required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
                     </div>
-                    <!--<p class="help is-danger">This number is invalid</p>-->
                 </div>
 
                 <div class="field">
-                    <label class="label">Password</label>
+                    <label class="label">Phone Number</label>
                     <p class="control has-icons-left">
-                        <input name ="password" id="password" class="input" type="password" placeholder="Password"
+                        <input name ="password" id="phone number" class="input" type="text" placeholder="Password"
                         required>
                         <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-phone"></i>
                         </span>
                     </p>
                 </div>
 
                 <div class="field">
-                    <label class="label">Re-Password</label>
+                    <label class="label">Address</label>
                     <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Re-Password"
+                        <input class="input" type="text" placeholder="Address line 1"
                         required>
                         <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-home"></i>
                         </span>
                     </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Address line 2"
+                        required>
+                    </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Postal code"
+                        required>
+                    </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="City"
+                        required>
+                    </p>
+                </div>
+
+                <div class="control">
+                    <label class="label">Regular medication taken</label>
+                  <div class="select">
+                    <select>
+                      <option>Select medicine</option>
+                      <option>Donepezil (Aricept)</option>
+                      <option>Galantamine (Razadyne)</option>
+                      <option>Memantine (Namenda)</option>
+                      <option>Rivastigmine (Exelon)</option>
+                      <option>Memantine + Donepezil (Namzaric)</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">Medication time</label>
+                  <div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0400hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0500hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0600hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0700hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0800hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0900hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1000hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1400hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1500hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1600hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1700hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1800hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1900hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2000hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2400hrs</label>
+                    </div>
                 </div>
 
                 <div class="field is-grouped">
