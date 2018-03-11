@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medicine reminders</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <!-- Bulma Version 0.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" integrity="sha256-HEtF7HLJZSC3Le1HcsWbz1hDYFPZCqDhZa9QsCgVUdw=" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="../css/hero.css">
+
+  <script>
+    function startTime() {
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =
+        h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+    }
+    function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+}
+</script>
+</head>
+
+<body onload="startTime()">
+<section class="hero is-info is-small is-bold">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">
+          <div id="txt"></div>
+        </h1>
+      </div>
+    </div>
+</section>
+
+  <div class="box cta">
+    <p class="has-text-centered">
+       Patient medicine trackers
+    </p>
+  </div>
+
+  <script>
+    var data = [
+      {
+        name: 'Bunny Rabbit',
+        patientID: 89,
+        medicineName: 'Donepezil (Aricept)',
+        firstIntake: '15:00',
+        secondIntake: '21:00'
+      },
+      {
+        name: 'Barking Dog',
+        patientID: 90,
+        medicineName: 'Galantamine (Razadyne)',
+        firstIntake: '09:00'
+      },
+      {
+        name: 'Jumpy Tiger',
+        patientID: 91,
+        medicineName: 'Memantine (Namenda)',
+        firstIntake: '00:00',
+        secondIntake: '06:00',
+        thirdIntake: '13:00',
+        fourthIntake: '20:00'
+      },
+      {
+        name: 'Shivering Penguin',
+        patientID: 92,
+        medicineName: 'Rivastigmine (Exelon)',
+        firstIntake: '14:00',
+        secondIntake: '19:00'
+      }
+    ]
+
+  var patient = data[0]
+  patient.name
+
+  </script>
+
+  <section class="container">
+    <div class="columns features">
+      <div class="column is-12">
+        <div class="card">
+          <div class="card-image has-text-centered">
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <h4>Bunny Rabbit (Patient ID: 89)</h4>
+                <span class="tag is-primary">15:00</span>
+                <span class="tag is-primary">21:00</span>
+              <p><a href="#">See patient profile</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+    <div class="columns features">
+      <div class="column is-12">
+        <div class="card">
+          <div class="card-image has-text-centered">
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <h4>Barking Dog (Patient ID: 90)</h4>
+                <span class="tag is-primary">09:00</span>
+              <p><a href="#">See patient profile</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+    <div class="columns features">
+      <div class="column is-12">
+        <div class="card">
+          <div class="card-image has-text-centered">
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <h4>Jumpy Tiger (Patient ID: 91)</h4>
+                <span class="tag is-primary">00:00</span>
+                <span class="tag is-primary">06:00</span>
+                <span class="tag is-primary">13:00</span>
+                <span class="tag is-primary">20:00</span>
+              <p><a href="#">See patient profile</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+    <div class="columns features">
+      <div class="column is-12">
+        <div class="card">
+          <div class="card-image has-text-centered">
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <h4>Shivering Penguin (Patient ID: 92)</h4>
+                <span class="tag is-primary">14:00</span>
+                <span class="tag is-primary">19:00</span>
+              <p><a href="#">See patient profile</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <script async type="text/javascript" src="../js/bulma.js"></script>
+</body>
+</html>
