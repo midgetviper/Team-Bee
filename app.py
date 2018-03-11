@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import pymysql.cursors
 import os
+from flask_cors import CORS, cross_origin
 from urllib.parse import urlparse
 import urllib.parse
 
 app = Flask(__name__)
 print("hello human")
+CORS(app, support_credentials=True)
+
 
 # db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
 db_name = 'TeamBee'
@@ -64,6 +67,18 @@ def signup_data():
         finally:
             return "That username already exists"
 
+
+        # return(input_email, input_name, input_password
+
+@app.route('/medtaken', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def medtaken():
+    patient_act_code = request.data
+    cursor = connection.cursor()
+    sql = 'INSERT INTO MedicineTakenEvents(patientId) VALUES (SELECT patientId FROM PatientActivationCode WHERE code == %s)'
+    cursor.execute(sql, (patient_act_code))
+    connection.commit()
+    return "ok"
 
 
 """Need to compare a database entry and a string sensibly"""
