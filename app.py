@@ -1,16 +1,44 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import pymysql.cursors
+import os
+from urllib.parse import urlparse
+import urllib.parse
 
 app = Flask(__name__)
+print("hello human")
 
-# db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='Frogger4962',
-                             db='TeamBee',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor
-                             )
+#db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
+db_name = 'TeamBee'
+host = 'localhost'
+user = 'root'
+password = 'Frogger4962'
+db_port = 3306
+
+print("before cleardb dtabase url parsing")
+if ('CLEARDB_DATABASE_URL' in os.environ):
+    url = os.environ.get('CLEARDB_DATABASE_URL')
+    urllib.parse.uses_netloc.append('mysql')
+
+    url = urlparse(url)
+    db_name = url.path[1:]
+    host = url.hostname
+    user = url.username
+    password = url.password
+    host = url.hostname
+    dbPort = url.port
+
+print(host, db_port, user, password, db_name)
+
+connection = pymysql.connect(  host = host,
+                               port = db_port,
+                               user = user,
+                               password = password,
+                               db = db_name,
+                               charset = 'utf8mb4',
+                               cursorclass = pymysql.cursors.DictCursor
+                               )
+
+
 @app.route('/')
 def main():
     #    username = request.cookies.get('username')
@@ -92,5 +120,10 @@ def patient_registration():
 """secret keys"""
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
+print("before if name")
 if __name__ == "__main__":
-    app.run()
+    print("inside if name")
+    port = int(os.environ.get('PORT', 8000))
+    print(port)
+    app.run(debug=True, host='0.0.0.0', port=port)
+    print("flask started")
