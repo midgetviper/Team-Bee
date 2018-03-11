@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, escape
+from flask import Flask, render_template, request, redirect, url_for, session
 import pymysql.cursors
 import os
 from urllib.parse import urlparse
@@ -41,12 +41,13 @@ connection = pymysql.connect(  host = host,
 
 @app.route('/')
 def main():
+    #    username = request.cookies.get('username')
+    # username = session['username']
     return render_template('index.html')
 
 
-
-@app.route('/signup.html', methods =['GET', 'POST'])
-def  signup_data():
+@app.route('/signup.html', methods=['GET', 'POST'])
+def signup_data():
     if request.method == 'GET':
         return render_template('signup.html')
     elif request.method == 'POST':
@@ -56,43 +57,68 @@ def  signup_data():
         try:
             with connection.cursor() as cursor:
                 """create a new record"""
-                sql = "INSERT INTO `login` (`name`, `password`, `email`) VALUES (%s, %s)"
-                cursor.execute(sql,(input_name, input_password, input_email))
+                sql = 'INSERT INTO Caretaker (`email`, `password`, `name`) VALUES(%s, %s, %s)'
+                cursor.execute(sql, (input_email, input_password, input_name))
                 connection.commit()
+                return redirect(url_for('main'))
+
         finally:
-            connection.close()
+            return
 
-        return(input_email, input_name, input_password)
+        # return(input_email, input_name, input_password)
 
 
-@app.route('/login.html', methods = ['GET', 'POST'])
+"""Need to compare a database entry and a string sensibly"""
+@app.route('/login.html', methods=['GET', 'POST'])
 def login_data():
-        if request.method == 'GET':
-            return render_template('login.html')
-        elif request.method == 'POST':
-            input_email = request.form['email']
-            input_password = request.form['password']
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `passwords`, FROM `login` WHERE `email`=%s"
-                cursor.execute(sql, (input_email,))
+                sql = "SELECT `password` FROM `Caretaker` WHERE `email`=%s"
+                cursor.execute(sql, request.form['email'])
                 result = cursor.fetchone()
-                stored_password = result['password']
-                if input_password == stored_password:
-                    session['email'] = request.form['email']
-                    return redirect(url_for('index'))
-                else:
-                    print('password incorrect')
-
+            print(result['password'])
+            if result['password'] == request.form['password']:
+                #session['username'] = input_email
+                return render_template('home.html')
+            else:
+                return redirect(url_for('main'))
         finally:
-            connection.close()
+            return
 
 
 @app.route('/logout')
 def logout():
-    session.pop('email', None)
-    return redirect(url_for('index'))
+    session.pop('username', None)
+    return render_template('logout.html')
 
+
+"""takes patient phone no. name and creates an id which it then stored in the database"""
+
+
+@app.route('/PatientRegistration.html', methods = ['GET', 'POST'])
+def patient_registration():
+    if request.method == 'GET':
+        return render_template('/PatientRegistration.html')
+    elif request.method == 'POST':
+        name = request.form['name']
+        number = request.form['number']
+        eyedee = len(name)*number
+        try:
+            with connection.cursor() as cursor:
+                """create a new record"""
+                sql = 'INSERT INTO Patient (`id`, `name`, `phoneNumber`) VALUES(%s, %s, %s)'
+                cursor.execute(sql, (eyedee, name, number))
+                connection.commit()
+                return render_template('/thankYou.html')
+
+        finally:
+            return
+
+"""secret keys"""
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 print("before if name")
 if __name__ == "__main__":
