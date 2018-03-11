@@ -1,13 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import pymysql.cursors
 import os
+from flask_cors import CORS, cross_origin
 from urllib.parse import urlparse
 import urllib.parse
+import nexmo
+import json
+from flask import Flask, request, Response, jsonify
+
+
 
 app = Flask(__name__)
 print("hello human")
+CORS(app, support_credentials=True)
 
-#db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
+client = nexmo.Client(
+    key="dummy",
+    secret="dummy",
+    application_id="b4a98454-b177-4771-b17f-05704996455e",
+    private_key="./private.key",
+)
+
+
+# db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
 db_name = 'TeamBee'
 host = 'localhost'
 user = 'root'
@@ -29,14 +44,14 @@ if ('CLEARDB_DATABASE_URL' in os.environ):
 
 print(host, db_port, user, password, db_name)
 
-connection = pymysql.connect(  host = host,
-                               port = db_port,
-                               user = user,
-                               password = password,
-                               db = db_name,
-                               charset = 'utf8mb4',
-                               cursorclass = pymysql.cursors.DictCursor
-                               )
+connection = pymysql.connect(host=host,
+                             port=db_port,
+                             user=user,
+                             password=password,
+                             db=db_name,
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor
+                             )
 
 
 @app.route('/')
@@ -56,40 +71,54 @@ def signup_data():
         input_password = request.form['password']
         try:
             with connection.cursor() as cursor:
-                """create a new record"""
                 sql = 'INSERT INTO Caretaker (`email`, `password`, `name`) VALUES(%s, %s, %s)'
                 cursor.execute(sql, (input_email, input_password, input_name))
                 connection.commit()
                 return redirect(url_for('main'))
 
         finally:
-            return
+            return "That username already exists"
 
-        # return(input_email, input_name, input_password)
+
+        # return(input_email, input_name, input_password
+
+@app.route('/medtaken', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def medtaken():
+    print('medtaken')
+    patient_act_code = request.data
+    print(patient_act_code)
+    cursor = connection.cursor()
+    sql = 'INSERT INTO MedicineTakenEvents(patientId) VALUES (SELECT patientId FROM PatientActivationCode WHERE code == %s)'
+    cursor.execute(sql, (patient_act_code))
+    connection.commit()
+    return "ok"
 
 
 """Need to compare a database entry and a string sensibly"""
+
+
 @app.route('/login.html', methods=['GET', 'POST'])
 def login_data():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        try:
+        #try:
             with connection.cursor() as cursor:
                 sql = "SELECT `password` FROM `Caretaker` WHERE `email`=%s"
                 cursor.execute(sql, request.form['email'])
                 result = cursor.fetchone()
             print(result['password'])
             if result['password'] == request.form['password']:
-                #session['username'] = input_email
+                session['username'] = request.form['email']
                 return render_template('home.html')
             else:
                 return redirect(url_for('main'))
-        finally:
-            return
+        #finally:
+           # return
 
 
-@app.route('/logout')
+@app.route('/logout.html')
 def logout():
     session.pop('username', None)
     return render_template('logout.html')
@@ -98,24 +127,55 @@ def logout():
 """takes patient phone no. name and creates an id which it then stored in the database"""
 
 
-@app.route('/PatientRegistration.html', methods = ['GET', 'POST'])
+@app.route('/PatientRegistration.html', methods=['GET', 'POST'])
 def patient_registration():
     if request.method == 'GET':
         return render_template('/PatientRegistration.html')
     elif request.method == 'POST':
-        name = request.form['name']
-        number = request.form['number']
-        eyedee = len(name)*number
+        #try:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO Patient (`name`, `phoneNumber`) VALUES(%s, %s);'
+                cursor.execute(sql, (request.form['name'], request.form['number']))
+                connection.commit()
+                pat_id = cursor.lastrowid
+                sql2 = 'INSERT INTO PatientActivationCode(code, patientId) VALUES (%s, %s)'
+                cursor.execute(sql2, (pat_id*3, pat_id))
+                print(pat_id)
+            return render_template('/thankYou.html')
+
+        #except ValueError:
+            #return ValueError
+
+@app.route('/call/<patient_num>', methods=['GET'])
+def call(patient_num):
+    response = client.create_call({
+        'to': [{'type': 'phone', 'number': patient_num}],
+        'from': {'type': 'phone', 'number': 447418340450},
+        'answer_url': ['http://localhost:8000/ncco']
+        })
+    return jsonify(response)
+
+
+@app.route('/ncco', methods=['GET', 'POST'])
+def ncco():
+    with open('ncco/talk.json') as f:
+        ncco = json.loads(f.read())
+    return jsonify(ncco)   
+
+
+@app.route('/home.html', methods=['GET','POST'])
+def patient_search():
+    if request.method == 'GET':
+        return render_template('/home.html')
+    elif request.method == 'POST':
         try:
             with connection.cursor() as cursor:
-                """create a new record"""
-                sql = 'INSERT INTO Patient (`id`, `name`, `phoneNumber`) VALUES(%s, %s, %s)'
-                cursor.execute(sql, (eyedee, name, number))
-                connection.commit()
-                return render_template('/thankYou.html')
-
+                sql = "SELECT * FROM `Patient` WHERE `name` = &s `"
+                cursor.execute(sql, request.form['patientsearch'])
+                result = cursor.execute.fetchone()
+                return result
         finally:
-            return
+            return "try again"
 
 """secret keys"""
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
