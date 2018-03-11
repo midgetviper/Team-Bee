@@ -10,7 +10,7 @@ print("hello human")
 CORS(app, support_credentials=True)
 
 
-#db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
+# db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
 db_name = 'TeamBee'
 host = 'localhost'
 user = 'root'
@@ -32,14 +32,14 @@ if ('CLEARDB_DATABASE_URL' in os.environ):
 
 print(host, db_port, user, password, db_name)
 
-connection = pymysql.connect(  host = host,
-                               port = db_port,
-                               user = user,
-                               password = password,
-                               db = db_name,
-                               charset = 'utf8mb4',
-                               cursorclass = pymysql.cursors.DictCursor
-                               )
+connection = pymysql.connect(host=host,
+                             port=db_port,
+                             user=user,
+                             password=password,
+                             db=db_name,
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor
+                             )
 
 
 @app.route('/')
@@ -59,14 +59,14 @@ def signup_data():
         input_password = request.form['password']
         try:
             with connection.cursor() as cursor:
-                """create a new record"""
                 sql = 'INSERT INTO Caretaker (`email`, `password`, `name`) VALUES(%s, %s, %s)'
                 cursor.execute(sql, (input_email, input_password, input_name))
                 connection.commit()
                 return redirect(url_for('main'))
 
         finally:
-            return
+            return "That username already exists"
+
 
         # return(input_email, input_name, input_password
 
@@ -82,27 +82,29 @@ def medtaken():
 
 
 """Need to compare a database entry and a string sensibly"""
+
+
 @app.route('/login.html', methods=['GET', 'POST'])
 def login_data():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        try:
+        #try:
             with connection.cursor() as cursor:
                 sql = "SELECT `password` FROM `Caretaker` WHERE `email`=%s"
                 cursor.execute(sql, request.form['email'])
                 result = cursor.fetchone()
             print(result['password'])
             if result['password'] == request.form['password']:
-                #session['username'] = input_email
+                session['username'] = request.form['email']
                 return render_template('home.html')
             else:
                 return redirect(url_for('main'))
-        finally:
-            return
+        #finally:
+           # return
 
 
-@app.route('/logout')
+@app.route('/logout.html')
 def logout():
     session.pop('username', None)
     return render_template('logout.html')
@@ -116,18 +118,30 @@ def patient_registration():
     if request.method == 'GET':
         return render_template('/PatientRegistration.html')
     elif request.method == 'POST':
-        try:
+        #try:
             with connection.cursor() as cursor:
                 sql = 'INSERT INTO Patient (`name`, `phoneNumber`) VALUES(%s, %s)'
                 cursor.execute(sql, (request.form['name'], request.form['number']))
-                result = cursor.fetchnone()
-                print(result['id'])
-                result['id'] = cursor.lastrowid()
-                connection.commit()
+                row = connection.commit()
+                print(row)
             return render_template('/thankYou.html')
 
+        #except ValueError:
+            #return ValueError
+
+@app.route('/home.html', methods=['GET','POST'])
+def patient_search():
+    if request.method == 'GET':
+        return render_template('/home.html')
+    elif request.method == 'POST':
+        try:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM `Patient` WHERE `name` = &s `"
+                cursor.execute(sql, request.form['patientsearch'])
+                result = cursor.execute.fetchone()
+                return result
         finally:
-            return "fail"
+            return "try again"
 
 """secret keys"""
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
