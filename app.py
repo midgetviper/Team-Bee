@@ -4,10 +4,22 @@ import os
 from flask_cors import CORS, cross_origin
 from urllib.parse import urlparse
 import urllib.parse
+import nexmo
+import json
+from flask import Flask, request, Response, jsonify
+
+
 
 app = Flask(__name__)
 print("hello human")
 CORS(app, support_credentials=True)
+
+client = nexmo.Client(
+    key="dummy",
+    secret="dummy",
+    application_id="b4a98454-b177-4771-b17f-05704996455e",
+    private_key="./private.key",
+)
 
 
 # db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
@@ -67,20 +79,20 @@ def signup_data():
         finally:
             return "That username already exists"
 
-<<<<<<< HEAD
+
         # return(input_email, input_name, input_password
 
 @app.route('/medtaken', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def medtaken():
+    print('medtaken')
     patient_act_code = request.data
+    print(patient_act_code)
     cursor = connection.cursor()
     sql = 'INSERT INTO MedicineTakenEvents(patientId) VALUES (SELECT patientId FROM PatientActivationCode WHERE code == %s)'
     cursor.execute(sql, (patient_act_code))
     connection.commit()
     return "ok"
-=======
->>>>>>> upstream/master
 
 
 """Need to compare a database entry and a string sensibly"""
@@ -122,14 +134,34 @@ def patient_registration():
     elif request.method == 'POST':
         #try:
             with connection.cursor() as cursor:
-                sql = 'INSERT INTO Patient (`name`, `phoneNumber`) VALUES(%s, %s)'
+                sql = 'INSERT INTO Patient (`name`, `phoneNumber`) VALUES(%s, %s);'
                 cursor.execute(sql, (request.form['name'], request.form['number']))
-                row = connection.commit()
-                print(row)
+                connection.commit()
+                pat_id = cursor.lastrowid
+                sql2 = 'INSERT INTO PatientActivationCode(code, patientId) VALUES (%s, %s)'
+                cursor.execute(sql2, (pat_id*3, pat_id))
+                print(pat_id)
             return render_template('/thankYou.html')
 
         #except ValueError:
             #return ValueError
+
+@app.route('/call/<patient_num>', methods=['GET'])
+def call(patient_num):
+    response = client.create_call({
+        'to': [{'type': 'phone', 'number': patient_num}],
+        'from': {'type': 'phone', 'number': 447418340450},
+        'answer_url': ['http://localhost:8000/ncco']
+        })
+    return jsonify(response)
+
+
+@app.route('/ncco', methods=['GET', 'POST'])
+def ncco():
+    with open('ncco/talk.json') as f:
+        ncco = json.loads(f.read())
+    return jsonify(ncco)   
+
 
 @app.route('/home.html', methods=['GET','POST'])
 def patient_search():
