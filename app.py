@@ -1,15 +1,34 @@
 from flask import Flask, render_template, request, session, redirect, url_for, escape
 import pymysql.cursors
+import os
 
 app = Flask(__name__)
 
 #db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
-connection = pymysql.connect(host='localhost',
-                               user = 'root',
-                               password = 'Frogger4962',
-                               db = 'TeamBee',
+db_name = 'TeamBee'
+host = 'localhost'
+user = 'root'
+password = 'Frogger4962'
+db_port = 3306
+if ('CLEARDB_DATABASE_URL' in os.environ):
+    url = os.environ.get('CLEARDB_DATABASE_URL')
+    urlparse.uses_netloc.append('mysql')
+
+    url = urlparse.urlparse(url)
+    db_name = url.path[1:]
+    host = url.hostname
+    user = url.username
+    password = url.password
+    host = url.hostname
+    dbPort = url.port
+
+connection = pymysql.connect(  host = host,
+                               port = db_port,
+                               user = user,
+                               password = password,
+                               db = db_name,
                                charset = 'utf8mb4',
-                               cursorclass=pymysql.cursors.DictCursor
+                               cursorclass = pymysql.cursors.DictCursor
                                )
 
 
@@ -69,4 +88,5 @@ def logout():
 
 
 if __name__ == "__main__":
-	app.run()
+    port = int(os.environ.get('PORT', 8000))
+    app.run(debug=True, port=port)
