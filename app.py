@@ -3,6 +3,7 @@ import pymysql.cursors
 import os
 
 app = Flask(__name__)
+print("hello human")
 
 #db_caretaker = PyMySQL.connect('localhost', 'root', 'Frogger4962', 'caretaker')
 db_name = 'TeamBee'
@@ -10,6 +11,8 @@ host = 'localhost'
 user = 'root'
 password = 'Frogger4962'
 db_port = 3306
+
+print("before cleardb dtabase url parsing")
 if ('CLEARDB_DATABASE_URL' in os.environ):
     url = os.environ.get('CLEARDB_DATABASE_URL')
     urlparse.uses_netloc.append('mysql')
@@ -87,6 +90,8 @@ def logout():
     return redirect(url_for('index'))
 
 
+print("before if name")
 if __name__ == "__main__":
+    print("inside if name")
     port = int(os.environ.get('PORT', 8000))
     app.run(debug=True, port=port)
