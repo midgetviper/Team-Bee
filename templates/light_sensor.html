@@ -51,11 +51,9 @@
           if (previousV < 0.5) {
             console.log('SEND!')
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://e7c87fd1.ngrok.io/medtaken", true);
+            xhr.open("POST", "https://team-bee.herokuapp.com/medtaken", true);
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-                patientID: 89, open: true
-            }));
+            xhr.send('patient_activation_code_that_i_dont_have');
             path.style.fill="rgb(0,255,0)"
           }
         } else {
