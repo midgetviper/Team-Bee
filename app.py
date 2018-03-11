@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, escape
 import pymysql.cursors
 import os
+import urlparse
 
 app = Flask(__name__)
 print("hello human")
@@ -24,6 +25,8 @@ if ('CLEARDB_DATABASE_URL' in os.environ):
     password = url.password
     host = url.hostname
     dbPort = url.port
+
+print(host, db_port, user, password, db_name)
 
 connection = pymysql.connect(  host = host,
                                port = db_port,
