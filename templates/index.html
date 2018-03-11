@@ -4,29 +4,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Welcome to Dementia Care!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link rel="stylesheet" href="logout.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title">
-                Home
+            <h1 class="title" align="center">
+                Dementia Care
             </h1>
 
             <div class="field is-grouped">
-                <div class="control">
+                <div class="control" id="Logout">
                     <a href="/signup.html" class="button is-link">Sign up</a>
                 </div>
-                <div class="control">
-                    <a href="/login.html" class="button is-text">Caretaker Log in</a>
+                <div class="container" style="text-align: center;">
+                    <div class="control" id="thisbutton">
+                        <a href="/login.html" class="button is-text">Caretaker Log in</a>
+                    </div>
+                    <div id="thisbutton">
+                        <a href = "/PatientRegistration.html" class="button is-text">Patient Registration</a>
+                    </div>
                 </div>
-                <div>
-                    <a href = "/PatientRegistration.html" class="button is-text">Patient Registration</a>
-                </div>
-
             </div>
         </div>
     </section>

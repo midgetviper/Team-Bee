@@ -18,3 +18,7 @@
     display: block;
     font-size: 16px;
 }
+
+#thisbutton {
+	display: inline-block;
+}
