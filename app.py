@@ -70,24 +70,23 @@ def logout():
 """takes patient phone no. name and creates an id which it then stored in the database"""
 
 
-@app.route('/PatientRegistration.html', methods = ['GET', 'POST'])
+@app.route('/PatientRegistration.html', methods=['GET', 'POST'])
 def patient_registration():
     if request.method == 'GET':
         return render_template('/PatientRegistration.html')
     elif request.method == 'POST':
-        name = request.form['name']
-        number = request.form['number']
-        eyedee = len(name)*number
         try:
             with connection.cursor() as cursor:
-                """create a new record"""
-                sql = 'INSERT INTO Patient (`id`, `name`, `phoneNumber`) VALUES(%s, %s, %s)'
-                cursor.execute(sql, (eyedee, name, number))
+                sql = 'INSERT INTO Patient (`name`, `phoneNumber`) VALUES(%s, %s)'
+                cursor.execute(sql, (request.form['name'], request.form['number']))
+                result = cursor.fetchnone()
+                print(result['id'])
+                result['id'] = cursor.lastrowid()
                 connection.commit()
-                return render_template('/thankYou.html')
+            return render_template('/thankYou.html')
 
         finally:
-            return
+            return "fail"
 
 """secret keys"""
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
