@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Patient Registration
+            </h1>
+            <!--
+            <p class="subtitle">
+                Register a patient account on the platform
+            </p>
+            -->
+
+            <form method="POST" action="/signup.html">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input name = "name" id = "name" class="input" type="text" placeholder="Text input" value="Alex Schudel"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <!--<p class="help is-success">This username is available</p>-->
+                </div>
+
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input name = "email" id = "email" class="input" type="email" placeholder="Email input" value="aschudel1@sheffield.ac.uk"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                    <!--<p class="help is-danger">This email is invalid</p>-->
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <p class="control has-icons-left">
+                        <input name ="password" id="password" class="input" type="password" placeholder="Password"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Re-Password</label>
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" placeholder="Re-Password"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <a href="/" class="button is-text">Back</a>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link">Register</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</body>
+
+</html>
