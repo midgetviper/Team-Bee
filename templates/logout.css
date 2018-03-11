@@ -1,0 +1,20 @@
+#Logout {
+	position: fixed; /* or position: absolute; */
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#Register {
+	top: 20%;
+    border: none;
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+}
