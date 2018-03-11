@@ -75,7 +75,6 @@ def signup_data():
 def medtaken():
     patient_act_code = request.data
     cursor = connection.cursor()
-    
     sql = 'INSERT INTO MedicineTakenEvents(patientId) VALUES (SELECT patientId FROM PatientActivationCode WHERE code == %s)'
     cursor.execute(sql, (patient_act_code))
     connection.commit()
