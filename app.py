@@ -11,7 +11,6 @@ connection = pymysql.connect(host='localhost',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor
                              )
-
 @app.route('/')
 def main():
     #    username = request.cookies.get('username')
@@ -36,7 +35,7 @@ def signup_data():
                 return redirect(url_for('main'))
 
         finally:
-            connection.close()
+            return
 
         # return(input_email, input_name, input_password)
 
@@ -49,23 +48,46 @@ def login_data():
     elif request.method == 'POST':
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT `password`, FROM `Caretaker` WHERE `email`=%s"
-                cursor.execute(sql, (request.form['email'],))
+                sql = "SELECT `password` FROM `Caretaker` WHERE `email`=%s"
+                cursor.execute(sql, request.form['email'])
                 result = cursor.fetchone()
+            print(result['password'])
             if result['password'] == request.form['password']:
                 #session['username'] = input_email
-                return redirect(url_for('main'))
+                return render_template('home.html')
             else:
                 return redirect(url_for('main'))
         finally:
-            connection.close()
+            return
 
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect(url_for('main'))
+    return render_template('logout.html')
 
+
+"""takes patient phone no. name and creates an id which it then stored in the database"""
+
+
+@app.route('/PatientRegistration.html', methods = ['GET', 'POST'])
+def patient_registration():
+    if request.method == 'GET':
+        return render_template('/PatientRegistration.html')
+    elif request.method == 'POST':
+        name = request.form['name']
+        number = request.form['number']
+        eyedee = len(name)*number
+        try:
+            with connection.cursor() as cursor:
+                """create a new record"""
+                sql = 'INSERT INTO Patient (`id`, `name`, `phoneNumber`) VALUES(%s, %s, %s)'
+                cursor.execute(sql, (eyedee, name, number))
+                connection.commit()
+                return render_template('/thankYou.html')
+
+        finally:
+            return
 
 """secret keys"""
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
