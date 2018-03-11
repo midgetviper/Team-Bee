@@ -98,4 +98,6 @@ print("before if name")
 if __name__ == "__main__":
     print("inside if name")
     port = int(os.environ.get('PORT', 8000))
+    print(port)
     app.run(debug=True, port=port)
+    print("flask started")
