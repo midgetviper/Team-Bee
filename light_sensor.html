@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html>
+
+
  <head>
- <p> 
- <h1>Tracking medicine taken</h1>
-   <style>
-     h1 {font-family: Verdana; font-size: 30; text-align: center}
-     body { margin:0;  }
+ <h1 class="title has-text-centered">Setting up light sensor</h1>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+     <style>
      svg {
        display:block; position:absolute;
-       top:0%; left:0%; width:100%; height:100%;
+       top:20%; left:0%; width:100%; height:100%;
+     }
+
+     .text-container {
+      max-width: 600px;
      }
    </style>    
  </head>
+
  <body>
-  <svg viewBox="0 0 24 24">
+  <div class="container has-text-centered text-container">
+    <h2> 1. Click the 'Set-up' button and follow the browser prompts to connect to your Puck.js sensor. Your sensor should be coloured after the set up.</h2>
+    <h2> 2. Try covering the medicine container. The lightbulb should be red.</h2>
+    <h2> 3. Try opening the medicine container. The lightbulb should turn green.</h2>
+
+    <div class="has-button-right" style="display: inline-block; margin-top: 10px">
+      <div class="control">
+         <button id="setupButton" class="button is-link button is-left">Set-Up</button>
+      </div>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 24 24" style="margin-top: 80px">
     <path fill="#000000" d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z" />
   </svg>
-  <script src="https://www.puck-js.com/puck.js"></script>
+ 
+ <script src="https://www.puck-js.com/puck.js"></script>
   <script type="text/javascript">
     var path = document.getElementsByTagName('path')[0];
     path.style="cursor:pointer;fill:#BBB";
     var previousV = 0
+
+    //var rock = document.getElementsByTagName('button')[0];
+    var rock = setupButton
+
     function getLightValue() {
       Puck.eval("Puck.light()", function(v) {
         console.log({ 'v': v, 'previousV': previousV})
@@ -44,9 +67,13 @@
         }, 250);
       });
     }
-    path.addEventListener("click", function() {
+
+    rock.addEventListener("click", function() {
       getLightValue();
     });
+
+    
   </script>
  </body>
+
 </html>

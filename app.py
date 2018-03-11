@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for, escape
 import pymysql.cursors
 
 app = Flask(__name__)
@@ -18,23 +18,21 @@ def main():
     return render_template('index.html')
 
 
+
 @app.route('/signup.html', methods =['GET', 'POST'])
 def  signup_data():
     if request.method == 'GET':
         return render_template('signup.html')
     elif request.method == 'POST':
-        #print('got post request')
-        #print(request.form)
         input_email = request.form['email']
         input_name = request.form['name']
         input_password = request.form['password']
-        #print(email, name, password)
         try:
             with connection.cursor() as cursor:
                 """create a new record"""
                 sql = "INSERT INTO `login` (`name`, `password`, `email`) VALUES (%s, %s)"
                 cursor.execute(sql,(input_name, input_password, input_email))
-            connection.commit()
+                connection.commit()
         finally:
             connection.close()
 
@@ -48,18 +46,27 @@ def login_data():
         elif request.method == 'POST':
             input_email = request.form['email']
             input_password = request.form['password']
+        try:
             with connection.cursor() as cursor:
                 sql = "SELECT `passwords`, FROM `login` WHERE `email`=%s"
-                cursor.execute(sql, ('input_email',))
+                cursor.execute(sql, (input_email,))
                 result = cursor.fetchone()
                 stored_password = result['password']
                 if input_password == stored_password:
-                    print('It worked')
-                else
+                    session['email'] = request.form['email']
+                    return redirect(url_for('index'))
+                else:
                     print('password incorrect')
 
+        finally:
+            connection.close()
 
-            return (input_email, input_password)
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('index'))
+
 
 if __name__ == "__main__":
 	app.run()
