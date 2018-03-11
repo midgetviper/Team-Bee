@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Patient Registration
+            </h1>
+
+            <form method="POST" action="/signup.html">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input name = "name" id = "name" class="input" type="text" placeholder="Name"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email address</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input name = "email" id = "email" class="input" type="email" placeholder="Email address"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Phone Number</label>
+                    <p class="control has-icons-left">
+                        <input name ="password" id="phone number" class="input" type="text" placeholder="Password"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Address</label>
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Address line 1"
+                        required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-home"></i>
+                        </span>
+                    </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Address line 2"
+                        required>
+                    </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Postal code"
+                        required>
+                    </p>
+
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="City"
+                        required>
+                    </p>
+                </div>
+
+                <div class="control">
+                    <label class="label">Regular medication taken</label>
+                  <div class="select">
+                    <select>
+                      <option>Select medicine</option>
+                      <option>Donepezil (Aricept)</option>
+                      <option>Galantamine (Razadyne)</option>
+                      <option>Memantine (Namenda)</option>
+                      <option>Rivastigmine (Exelon)</option>
+                      <option>Memantine + Donepezil (Namzaric)</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label" style="display: inline-block; margin-top: 15px">Medication time</label>
+                  <div style="margin-left: 15px">
+                    <div class="container is-fluid">
+                        <input type="checkbox">0100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0400hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0500hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0600hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0700hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0800hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">0900hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1000hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1400hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1500hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1600hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1700hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1800hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">1900hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2000hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2100hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2200hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2300hrs</label>
+                    </div>
+                    <div class="container is-fluid">
+                        <input type="checkbox">2400hrs</label>
+                    </div>
+                </div>
+
+                <div class="field is-grouped" style="margin-top: 15px; text-align: center; justify-content: center">
+                    <div class="control">
+                        <a href="/" class="button is-text">Back</a>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link">Register</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</body>
+
+</html>
