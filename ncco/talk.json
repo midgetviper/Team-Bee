@@ -1,0 +1,11 @@
+[
+	{
+		"action": "record",
+		"eventUrl": ["http://3e080526.ngrok.io/event"]
+	},
+    {
+        "action": "talk",
+        "voiceName": "Russell",
+        "text": "Hello, did you know you didn't take your medication today, can you take your medication now?"
+    }
+]
